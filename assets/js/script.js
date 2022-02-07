@@ -40,23 +40,48 @@ function getLatLon(location) {
 var searchInput = document.querySelector("#userInput");
 var search = searchInput.value.trim();
 
+// function getApi(search) {
+    // var requestUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`;
+
+    // fetch(requestUrl)
+        // .then(function (response){
+            // return response.json();
+        // })
+        // .then(function (data){
+            // appendToHistory(search);
+            // getLatLon(data[0]);
+            // console.log(data)
+        // })
+// }
+
 function getApi(search) {
+	// fetching current weather based on user input
+	var searchInput = document.querySelector("#userInput");
+	var search = searchInput.value.trim();
     var requestUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`;
 
+	console.log( 'requestUrl: ' + requestUrl  );
+
     fetch(requestUrl)
-        .then(function (response){
-            return response.json();
-        })
+		.then( function(response) { return response.json() } )
         .then(function (data){
             appendToHistory(search);
             getLatLon(data[0]);
             console.log(data)
         })
+		.catch( error => console.log(error) )
+		.finally( console.log('finished with fetch') )
 }
+
 
 // fetching the weather image
 
 
+function appendToHistory(searchHistory) {
+    var value = $(this).siblings("#city").value;
+
+    localStorage.setItem(cityName, value);
+}
 
 
 
